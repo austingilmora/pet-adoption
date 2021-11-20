@@ -1,13 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What Breed Do You Need</title>
-    <link href="./assets/css/style.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breed Finder</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="./assets/css/style.css" rel="styleshet">
 </head>
 <body>
-    <script src="./assets/js/script.js"></script>
+
+<!-- Header -->
+<header>
+  <div class="header">
+      <h1>
+          <a href="/"> Dog Breed Finder</a>
+      </h1>
+  </div>
+  </header>
+
+<!-- Header 2 with Txt "What breed are you looking for?"-->
+
+<section id="question">
+  <div class="sec-header"> </div>
+  <div class="question">
+      <div id="what-breed" class="what-breed">
+          <h2>What Breed Do You Need?</h2>
+      </div>
+  </div>
+</section>
+
+<!-- Search Bar -->
+
+<section id="search">
+<form id="task-form">
+  <div class="form-group">
+    <label for="breed-name" class="search-title">Search for a Breed:</label>
+    <input type="text" name="breed-name" id="breed-name" class="text-input" placeholder="Enter Dog Breed Here" />
+  </div>
+  <button type="submit" class="button search-button">Search</button>
+</form>
+
+</section>
+
+<section class="dog-info">
+
+</section>
+<!-- Saved response row -->
+
+<!-- Footer -->
+
+<div class="footer">
+  <h2>Made for the Dogs &#128054;</h2>
+  <p>
+      &copy; 2021 UNC Coding Boot Camp, Project 1.
+  </p>
+</div>
+
+<script src="./assets/js/script.js"></script>
 </body>
 </html>
