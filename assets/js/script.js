@@ -14,7 +14,7 @@ var formSubmitHandler = function(event) {
         clearChildren(dogInfoEl);
         
         //get random pic of breed
-        //getPic(breed);
+        getDogPic(breed);
         // get wiki article
         getWiki(breed);
         
@@ -24,7 +24,7 @@ var formSubmitHandler = function(event) {
         
         
     } else {
-        modal.style.display = "block"
+        modal.style.display = "block";
     }
 };
 
@@ -65,6 +65,31 @@ var getWiki = function(breed) {
             dogInfoEl.appendChild(wikiBox);
     })
         .catch(function(error){console.log(error);});
+};
+
+const getDogPic = function(breed) {
+    const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
+
+    fetch(dogPicUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    // create img element
+                    const dogPicEl = document.createElement('img');
+                    // set img src to data
+                    dogPicEl.setAttribute('src', data.message);
+
+                    // append to container div
+                    dogInfoEl.appendChild(dogPicEl);
+                });
+            } else {
+                console.log("Sorry, that breed was not found!");
+            }
+        })
+        .catch(function(error) {
+            console.log('Error encountered: ' + error);
+        })
+
 };
 
 var clearChildren = function(parent) {
