@@ -70,7 +70,7 @@ var getWiki = function(breed) {
 const getDogPic = function(breed) {
     const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
 
-    fetch(dogPicUrl)
+    fetch(dogPicUrl) 
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
