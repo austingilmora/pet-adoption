@@ -42,7 +42,7 @@ var getWiki = function(breed) {
     var params = {
         action: "opensearch",
         search: breed + "(dog)",
-        limit: "1",
+        limit: "5",
         namespace: "0",
         format: "json"
     };
@@ -57,7 +57,9 @@ var getWiki = function(breed) {
     })
         .then(function(data) {
             //get array with wiki link
+            console.log(data);
             var wiki = data[3];
+            console.log(wiki);
             //take link out of array
             var wikiLink = wiki[0];
             //break up the link
@@ -263,7 +265,7 @@ $( function() {
         "whippet",
         "wolfhound"
     ];
-    $(".breed-name").autocomplete({
+    $("#breed-name").autocomplete({
       source: availableTags
     });
 } );
