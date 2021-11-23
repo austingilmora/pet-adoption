@@ -119,6 +119,7 @@ var getWiki = function(breed) {
 };
 
 const getDogPic = function(breed) {
+    breed = breed.toLowerCase()
     const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
     
 
