@@ -4,15 +4,17 @@ var searchButton = document.querySelector(".search-button");
 var dogInfoEl = document.querySelector(".dog-info");
 var favoriteDogEl = document.querySelector(".favorite-dogs");
 var savedDogs = [];
+var searchTerm = ""
+var searchNum = 0
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
     //get breed
     var breed = searchedBreed.value.trim();
-
+    searchTerm = breed + " dog"
     //if there is an input
     if(breed) {
-        loadDog(breed);
+        loadDog(searchTerm);
         
         //clear old search
         searchedBreed.value = "";
@@ -27,7 +29,17 @@ var formSubmitHandler = function(event) {
 
 var loadDog = function(breed) {
     clearChildren(dogInfoEl);
+    var breed = searchedBreed.value.trim();    
+    //get random pic of breed
+    getDogPic(breed);
+    // get wiki article
+    getWiki(breed);
         
+    makeFaveButton(breed);
+}
+
+var reLoadDog = function(breed) {
+    clearChildren(dogInfoEl);
     //get random pic of breed
     getDogPic(breed);
     // get wiki article
@@ -38,13 +50,15 @@ var loadDog = function(breed) {
 
 var getWiki = function(breed) {
     var url = "https://en.wikipedia.org/w/api.php"; 
-
+    console.log(searchTerm);
+    searchTerm = breed;
     var params = {
         action: "opensearch",
-        search: breed + " (dog)",
+        search: searchTerm,
         limit: "5",
         namespace: "0",
-        format: "json"
+        format: "json",
+        profile: "strict"
     };
 
     url = url + "?origin=*";
@@ -60,29 +74,59 @@ var getWiki = function(breed) {
             console.log(data);
             var wiki = data[3];
             console.log(wiki);
-            //take link out of array
-            var wikiLink = wiki[0];
-            //break up the link
-            var brokenWikiLink = wikiLink.split(".")
-            //make it mobile link
-            var mobileWikiLink = brokenWikiLink[0] + ".m." + brokenWikiLink[1] + "." + brokenWikiLink[2];
-            //make an iframe
-            var wikiBox = document.createElement("iframe");
-            //give the iframe the right source
-            wikiBox.src = mobileWikiLink;
-            //put the iframe on the page
-            dogInfoEl.appendChild(wikiBox);
+            if (wiki != undefined) {
+                if(wiki.length > 0) {
+                    searchNum = 0;
+                    //take link out of array
+                    var wikiLink = wiki[0];
+                    //break up the link
+                var brokenWikiLink = wikiLink.split(".")
+                //make it mobile link
+                var mobileWikiLink = brokenWikiLink[0] + ".m." + brokenWikiLink[1] + "." + brokenWikiLink[2];
+                //make an iframe
+                var wikiBox = document.createElement("iframe");
+                //give the iframe the right source
+                wikiBox.src = mobileWikiLink;
+                //put the iframe on the page
+                dogInfoEl.appendChild(wikiBox);
+                }
+                else {
+                    console.log(searchNum);
+                    if (searchNum === 0){
+                        var breed = searchedBreed.value.trim();
+                        searchTerm = breed
+                        getWiki(breed);
+                        searchNum++
+                    }
+                    
+                }
+                
+            }
+            else {
+                console.log(searchNum);
+                if (searchNum > 0 && searchNum < 2){
+                    var breed = searchedBreed.value.trim();
+                    console.log(breed)
+                    searchTerm = breed
+                    getWiki(breed);
+                    searchNum++
+                }
+                
+            }
+            
     })
         .catch(function(error){console.log(error);});
 };
 
 const getDogPic = function(breed) {
     const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
+    
 
     fetch(dogPicUrl)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
+                    console.log(data);
                     // create img element
                     const dogPicEl = document.createElement('img');
                     // set img src to data
@@ -125,7 +169,7 @@ var makeFave = function(breed) {
         // button says breed selected
         dogButton.innerHTML = "<h2>" + breed + "</h2>"
         //button does loadDog function with the text inside the button
-        dogButton.addEventListener("click", function(event) {loadDog(event.target.textContent)});
+        dogButton.addEventListener("click", function(event) {reLoadDog(event.target.textContent)});
         // add the button to fav list
         favoriteDogEl.appendChild(dogButton);
         //save new list of favorites to local storage
@@ -154,7 +198,7 @@ var loadFaveButtons = function() {
         //set the text as the breed name
         dogButton.innerHTML = "<h2>" + savedDogs[i] + "</h2>"
         // make the button to the loadDog function on a click
-        dogButton.addEventListener("click", function(event) {loadDog(event.target.textContent)});
+        dogButton.addEventListener("click", function(event) {reLoadDog(event.target.textContent)});
         //put the button in the favorite dog list
         favoriteDogEl.appendChild(dogButton);
     }
@@ -169,101 +213,101 @@ var clearChildren = function(parent) {
 
 $( function() {
     var availableTags = [
-        //"affenpinscher",
-        "african",
+        "affenpinscher",
+        //"african",
         "airedale",
         "akita",
-        //"appenzeller",
-        "australian",
-        //"basenji",
+        "appenzeller",
+        //"australian",
+        "basenji",
         "beagle",
         "bluetick",
-        //"borzoi",
-        //"bouvier",
-        "boxer",
-        //"brabancon",
-        //"briard",
+        "borzoi",
+        "bouvier",
+        //"boxer",
+        "brabancon",
+        "briard",
         //"buhund",
-        //"bulldog",
-        //"bullterrier",
-        //"cattledog",
+        "bulldog",
+        "bullterrier",
+        "cattledog",
         "chihuahua",
         "chow",
-        //"clumber",
-        //"cockapoo",
+        "clumber",
+        "cockapoo",
         "collie",
-        //"coonhound",
+        "coonhound",
         "corgi",
         //"cotondetulear",
-        //"dachshund",
+        "dachshund",
         "dalmatian",
-        //"dane",
-        //"deerhound",
-        //"dhole",
+        "dane",
+        "deerhound",
+        "dhole",
         "dingo",
-        //"doberman",
-        //"elkhound",
-        //"entlebucher",
-        "eskimo",
-        //"finnish",
-        //"frise",
-        "germanshepherd",
-        //"greyhound",
+        "doberman",
+        "elkhound",
+        "entlebucher",
+        //"eskimo",
+        "finnish",
+        "frise",
+        //"germanshepherd",
+        "greyhound",
         "groenendael",
-        "havanese",
+        //"havanese",
         "hound",
         "husky",
-        //"keeshond",
+        "keeshond",
         "kelpie",
-        //"komondor",
-        //"kuvasz",
-        //"labradoodle",
+        "komondor",
+        "kuvasz",
+        "labradoodle",
         "labrador",
-        //"leonberg",
-        //"lhasa",
-        //"malamute",
+        "leonberg",
+        "lhasa",
+        "malamute",
         "malinois",
         "maltese",
-        //"mastiff",
-        "mexicanhairless",
+        "mastiff",
+        //"mexicanhairless",
         //"mix",
-        "mountain",
+        //"mountain",
         "newfoundland",
-        //"otterhound",
-        //"ovcharka",
+        "otterhound",
+        "ovcharka",
         "papillon",
-        //"pekinese",
-        //"pembroke",
-        //"pinscher",
+        "pekinese",
+        "pembroke",
+        "pinscher",
         "pitbull",
-        "pointer",
+        //"pointer",
         "pomeranian",
         "poodle",
         "pug",
         "puggle",
-        //"pyrenees",
-        //"redbone",
-        //"retriever",
-        //"ridgeback",
-        //"rottweiler",
-        //"saluki",
+        "pyrenees",
+        "redbone",
+        "retriever",
+        "ridgeback",
+        "rottweiler",
+        "saluki",
         "samoyed",
-        //"schipperke",
-        //"schnauzer",
+        "schipperke",
+        "schnauzer",
         "setter",
-        //"sheepdog",
+        "sheepdog",
         "shiba",
-        //"shihtzu",
-        //"spaniel",
-        //"springer",
+        "shihtzu",
+        "spaniel",
+        "springer",
         //"stbernard",
-        //"terrier",
+        "terrier",
         "tervuren",
-        //"vizsla",
-        //"waterdog",
-        //"weimaraner",
-        //"whippet",
-        //"wolfhound"
+        "vizsla",
+        "waterdog",
+        "weimaraner",
+        "whippet",
+        "wolfhound"
     ];
     $("#breed-name").autocomplete({
       source: availableTags
