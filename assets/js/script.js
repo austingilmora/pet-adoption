@@ -104,13 +104,14 @@ var makeFaveButton = function(breed) {
     var faveButton = document.createElement("button");
     // button says add to favorites
     faveButton.textContent = "Add to Favorites!";
-    //button does makeFave function
-    faveButton.addEventListener("click", makeFave(breed));
+    
     //button goes to the page
     dogInfoEl.appendChild(faveButton);
+    //button does makeFave function
+    faveButton.addEventListener("click", function(event) {makeFave(breed)});
 };
 
-var makeFave = function(breed) {
+var makeFave = function(breed) {    
     loadFaves();
     
     //if there are no instances of that breed in favorites
