@@ -3,6 +3,7 @@ var modal = document.querySelector("#no-input");
 var searchButton = document.querySelector(".search-button");
 var dogInfoEl = document.querySelector(".dog-info");
 var favoriteDogEl = document.querySelector(".favorite-dogs");
+let addFaveContainerEl = document.querySelector(".add-fave");
 var savedDogs = [];
 var searchTerm = ""
 var searchNum = 0
@@ -158,7 +159,7 @@ var makeFaveButton = function(breed) {
     faveButton.textContent = "Add to Favorites!";
     
     //button goes to the page
-    dogInfoEl.appendChild(faveButton);
+    addFaveContainerEl.appendChild(faveButton);
     //button does makeFave function
     faveButton.addEventListener("click", function(event) {makeFave(breed)});
 };
