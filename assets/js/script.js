@@ -10,7 +10,6 @@ var searchNum = 0
 var wikiBox = document.querySelector("iframe");
 
 
-
 var formSubmitHandler = function(event) {
     event.preventDefault();
     //get breed
@@ -38,7 +37,6 @@ var loadDog = function(breed) {
     getDogPic(breed);
     // get wiki article
     getWiki(breed);
-        
     makeFaveButton(breed);
 }
 
@@ -153,18 +151,22 @@ const getDogPic = function(breed) {
 };
 
 var makeFaveButton = function(breed) {
+    // clear old button
+    clearChildren(addFaveContainerEl);
     //make fave button
     var faveButton = document.createElement("button");
     // button says add to favorites
     faveButton.textContent = "Add to Favorites!";
+    faveButton.setAttribute('id', 'fav-btn');
     faveButton.style.cssText = "border: 1px solid black; padding: 10px; background-color: orange;  "
     //button goes to the page
     addFaveContainerEl.appendChild(faveButton);
     //button does makeFave function
     faveButton.addEventListener("click", function(event) {makeFave(breed)});
+
 };
 
-var makeFave = function(breed) {    
+var makeFave = function(breed) {
     loadFaves();
     
     //if there are no instances of that breed in favorites
