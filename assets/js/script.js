@@ -2,6 +2,9 @@ var searchedBreed = document.querySelector("#breed-name");
 var modal = document.querySelector("#no-input");
 var searchButton = document.querySelector(".search-button");
 var dogInfoEl = document.querySelector(".dog-info");
+var wikiBox = document.querySelector("iframe");
+
+
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -30,6 +33,8 @@ var formSubmitHandler = function(event) {
 
 var getWiki = function(breed) {
     var url = "https://en.wikipedia.org/w/api.php"; 
+    
+    
 
 
     var params = {
@@ -59,10 +64,14 @@ var getWiki = function(breed) {
             var mobileWikiLink = brokenWikiLink[0] + ".m." + brokenWikiLink[1] + "." + brokenWikiLink[2];
             //make an iframe
             var wikiBox = document.createElement("iframe");
+            wikiBox.style.cssText = " height: 700px; box-shadow: 5px 10px orange; width: 850px; "
+            
+            
             //give the iframe the right source
             wikiBox.src = mobileWikiLink;
             //put the iframe on the page
             dogInfoEl.appendChild(wikiBox);
+            
     })
         .catch(function(error){console.log(error);});
 };
@@ -76,6 +85,7 @@ const getDogPic = function(breed) {
                 response.json().then(function(data) {
                     // create img element
                     const dogPicEl = document.createElement('img');
+                    dogPicEl.style.cssText = "margin: 35px; box-shadow: 5px 10px gold; max-width: 650px; max-height: 700px " 
                     // set img src to data
                     dogPicEl.setAttribute('src', data.message);
 
