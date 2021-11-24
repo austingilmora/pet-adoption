@@ -3,9 +3,12 @@ var modal = document.querySelector("#no-input");
 var searchButton = document.querySelector(".search-button");
 var dogInfoEl = document.querySelector(".dog-info");
 var favoriteDogEl = document.querySelector(".favorite-dogs");
+let addFaveContainerEl = document.querySelector(".add-fave");
 var savedDogs = [];
 var searchTerm = ""
 var searchNum = 0
+var wikiBox = document.querySelector("iframe");
+
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -34,7 +37,6 @@ var loadDog = function(breed) {
     getDogPic(breed);
     // get wiki article
     getWiki(breed);
-        
     makeFaveButton(breed);
 }
 
@@ -85,6 +87,7 @@ var getWiki = function(breed) {
                 var mobileWikiLink = brokenWikiLink[0] + ".m." + brokenWikiLink[1] + "." + brokenWikiLink[2];
                 //make an iframe
                 var wikiBox = document.createElement("iframe");
+                wikiBox.style.cssText = " height: 700px; box-shadow: 5px 10px orange; width: 850px; "
                 //give the iframe the right source
                 wikiBox.src = mobileWikiLink;
                 //put the iframe on the page
@@ -123,13 +126,14 @@ const getDogPic = function(breed) {
     const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
     
 
-    fetch(dogPicUrl)
+    fetch(dogPicUrl) 
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
                     console.log(data);
                     // create img element
                     const dogPicEl = document.createElement('img');
+                    dogPicEl.style.cssText = "margin: 35px; box-shadow: 5px 10px gold; max-width: 650px; max-height: 700px " 
                     // set img src to data
                     dogPicEl.setAttribute('src', data.message);
 
@@ -147,18 +151,22 @@ const getDogPic = function(breed) {
 };
 
 var makeFaveButton = function(breed) {
+    // clear old button
+    clearChildren(addFaveContainerEl);
     //make fave button
     var faveButton = document.createElement("button");
     // button says add to favorites
     faveButton.textContent = "Add to Favorites!";
-    
+    faveButton.setAttribute('id', 'fav-btn');
+    faveButton.style.cssText = "border: 1px solid black; padding: 10px; background-color: orange;  "
     //button goes to the page
-    dogInfoEl.appendChild(faveButton);
+    addFaveContainerEl.appendChild(faveButton);
     //button does makeFave function
     faveButton.addEventListener("click", function(event) {makeFave(breed)});
+
 };
 
-var makeFave = function(breed) {    
+var makeFave = function(breed) {
     loadFaves();
     
     breed = breed.toLowerCase();
@@ -169,6 +177,8 @@ var makeFave = function(breed) {
         savedDogs.push(breed);
         //make a button
         var dogButton = document.createElement("button");
+        
+        
         // button says breed selected
         dogButton.innerHTML = "<h2>" + breed + "</h2>"
         //button does loadDog function with the text inside the button
@@ -198,6 +208,7 @@ var loadFaveButtons = function() {
     for (let i = 0; i < savedDogs.length; i++) {
         //make a button
         var dogButton = document.createElement("button");
+        dogButton.style.cssText = "border: 1px solid black; padding: 10px; background-color: orange; "
         //set the text as the breed name
         dogButton.innerHTML = "<h2>" + savedDogs[i] + "</h2>"
         // make the button to the loadDog function on a click
