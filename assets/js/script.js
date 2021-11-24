@@ -122,7 +122,7 @@ var getWiki = function(breed) {
 };
 
 const getDogPic = function(breed) {
-    breed = breed.toLowerCase();
+    breed = breed.toLowerCase().split(' ').join('');
     const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
     
 
@@ -252,7 +252,7 @@ $( function() {
         "collie",
         "coonhound",
         "corgi",
-        //"cotondetulear",
+        "cotondetulear",
         "dachshund",
         "dalmatian",
         "dane",
@@ -265,7 +265,7 @@ $( function() {
         //"eskimo",
         "finnish",
         "frise",
-        //"germanshepherd",
+        "germanshepherd",
         "greyhound",
         "groenendael",
         //"havanese",
@@ -283,7 +283,7 @@ $( function() {
         "malinois",
         "maltese",
         "mastiff",
-        //"mexicanhairless",
+        "mexicanhairless",
         //"mix",
         //"mountain",
         "newfoundland",
