@@ -157,7 +157,7 @@ var makeFaveButton = function(breed) {
     var faveButton = document.createElement("button");
     // button says add to favorites
     faveButton.textContent = "Add to Favorites!";
-    
+    faveButton.style.cssText = "border: 1px solid black; padding: 10px; background-color: orange;  "
     //button goes to the page
     addFaveContainerEl.appendChild(faveButton);
     //button does makeFave function
@@ -173,6 +173,8 @@ var makeFave = function(breed) {
         savedDogs.push(breed);
         //make a button
         var dogButton = document.createElement("button");
+        
+        
         // button says breed selected
         dogButton.innerHTML = "<h2>" + breed + "</h2>"
         //button does loadDog function with the text inside the button
@@ -202,6 +204,7 @@ var loadFaveButtons = function() {
     for (let i = 0; i < savedDogs.length; i++) {
         //make a button
         var dogButton = document.createElement("button");
+        dogButton.style.cssText = "border: 1px solid black; padding: 10px; background-color: orange; "
         //set the text as the breed name
         dogButton.innerHTML = "<h2>" + savedDogs[i] + "</h2>"
         // make the button to the loadDog function on a click
