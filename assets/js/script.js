@@ -119,7 +119,7 @@ var getWiki = function(breed) {
 };
 
 const getDogPic = function(breed) {
-    breed = breed.toLowerCase()
+    breed = breed.toLowerCase();
     const dogPicUrl = "https://dog.ceo/api/breed/" + breed + "/images/random";
     
 
@@ -161,6 +161,8 @@ var makeFaveButton = function(breed) {
 var makeFave = function(breed) {    
     loadFaves();
     
+    breed = breed.toLowerCase();
+
     //if there are no instances of that breed in favorites
     if (savedDogs.indexOf(breed) === -1) {
         //put the breed in favorites
