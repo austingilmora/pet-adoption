@@ -181,6 +181,7 @@ var makeFave = function(breed) {
         
         // button says breed selected
         dogButton.innerHTML = "<h2>" + breed + "</h2>"
+        dogButton.style.cssText = "border: 1px solid black; padding: 10px; background-color: orange;  "
         //button does loadDog function with the text inside the button
         dogButton.addEventListener("click", function(event) {reLoadDog(event.target.textContent)});
         // add the button to fav list
